@@ -1,5 +1,7 @@
 # HW1: SystemVerilog Debugging
 
+new test
+
 This homework will introduce you to the process of building, testing and debugging SystemVerilog code.
 
 There are two components to this homework. HW1A involves looking through a waveform file (`treasure_hunt.vcd`) using the GtkWave program to get you familiar with looking at waveforms. HW1B involves fixing some bugs in some simple adder circuits.
