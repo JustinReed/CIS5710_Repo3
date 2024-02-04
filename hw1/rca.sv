@@ -28,16 +28,6 @@ module fulladder(input wire  cin,
    assign cout = cout_tmp1 | cout_tmp2;
 endmodule
 
-// module fulladder(input wire  cin,
-//                  input wire  a,s
-//                  input wire  b,
-//                  output wire s,
-//                  output wire cout);
-//    wire s_tmp, cout_tmp1, cout_tmp2;
-//    halfadder h0(.a(a), .b(b), .s(s_tmp), .cout(cout_tmp1));
-//    halfadder h1(.a(s_tmp), .b(cin), .s(s), .cout(cout_tmp2));
-//    assign cout = cout_tmp1 | cout_tmp2;
-// endmodule
 
 /* A full adder that adds 2-bit numbers. Builds upon the 1-bit full adder. */
 module fulladder2(input wire        cin,
@@ -46,8 +36,8 @@ module fulladder2(input wire        cin,
                   output wire [1:0] s,
                   output wire       cout);
    wire cout_tmp;
-   fulladder a0(.cin(cin), .a(a[0]), .b(b[0]), .s(s[0]), .cout(cout));
-   fulladder a1(.cin(cout_tmp), .a(a[1]), .b(b[1]), .s(s[0]), .cout(cout_tmp));
+   fulladder a0(.cin(cin), .a(a[0]), .b(b[0]), .s(s[0]), .cout(cout_tmp));
+   fulladder a1(.cin(cout_tmp), .a(a[1]), .b(b[1]), .s(s[1]), .cout(cout));
 endmodule
 
 /* 4-bit ripple-carry adder that adds two 4-bit numbers (taken from the
