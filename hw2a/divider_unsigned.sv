@@ -12,9 +12,23 @@ module divider_unsigned (
 );
 
     // TODO: your code here
+begin
+    logic temp_select = 1'b0;
+    logic test_output;
+    mux1s32b (.select(temp_select), .opt1(i_dividend), .opt2(i_divisor), .result(test_output));
+    
+end    
 
 endmodule
 
+module mux1s32b (select, opt1, opt2, result);
+begin
+    input select;
+    input [31:0] opt1, opt2;
+    output [31:0] result;
+    assign result = ~select & opt1 | select & opt2;
+end 
+endmodule
 
 module divu_1iter (
     input  wire [31:0] i_dividend,
