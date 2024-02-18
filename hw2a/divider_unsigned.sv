@@ -12,23 +12,56 @@ module divider_unsigned (
 );
 
     // TODO: your code here
-// begin
-//     logic temp_select = 1'b0;
-//     logic test_output;
-//     mux1s32b (.select(temp_select), .opt1(i_dividend), .opt2(i_divisor), .result(test_output));
+    wire [31:0] dividend[31:0];
+    assign dividend[31] = {31'b0, i_dividend[31]};
+
+    wire [31:0] new_dividend[31:0];
+
+
+    genvar i; 
+    for (i = 0; i < 32; i = i + 1) begin: divider_circuit
+        divu_1iter_alt curr_circuit(.curr_dividend(dividend[31 - i]), .carry_bit(i_dividend[31 - i]), 
+        .total_divisor(i_divisor), .next_dividend(new_dividend[31 - i]), .quotient_bit(o_quotient[31 - i])); 
+        assign dividend[30 - i] = new_dividend[31 - i];
+
+        // assign o_quotient[i] = 1'b0;
+        // assign dividend = dividend << 1;  
+        // if(i = 31) begin
+            
+        // end
     
-// end    
+    end
+
+    assign o_remainder = new_dividend[0];
 
 endmodule
 
-// module mux1s32b (select, opt1, opt2, result);
-// begin
-//     input select;
-//     input [31:0] opt1, opt2;
-//     output [31:0] result;
-//     assign result = ~select & opt1 | select & opt2;
-// end 
-// endmodule
+module divu_1iter_alt(
+    input wire [31:0] curr_dividend, 
+    input wire carry_bit, 
+    input wire [31:0] total_divisor, 
+    output wire [31:0] next_dividend,
+    output wire quotient_bit
+); 
+    wire [31:0] shift_result;
+    wire [31:0] dividend_compare;
+    assign shift_result = {curr_dividend[30:0], carry_bit};
+    assign dividend_compare = shift_result - total_divisor;
+
+    wire is_negative;
+    assign is_negative = dividend_compare[31]; // first bit of subtraction result indicates sign
+
+
+    assign next_dividend = is_negative ? shift_result : dividend_compare;
+    assign quotient_bit = ~ is_negative;
+
+
+
+    
+
+
+
+endmodule
 
 module divu_1iter (
     input  wire [31:0] i_dividend,
@@ -53,5 +86,7 @@ module divu_1iter (
     */
 
     // TODO: your code here
+
+    // assign o_dividend = 31'b0;    
 
 endmodule

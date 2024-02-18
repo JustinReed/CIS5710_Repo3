@@ -84,11 +84,11 @@ async def test_simple1(dut):
 @cocotb.test()
 async def test_simple2(dut):
     await Timer(1, "ns")
-    dut.i_dividend.value = 10
-    dut.i_divisor.value = 4
+    dut.i_dividend.value = 135 # originally 10
+    dut.i_divisor.value = 8 # originally 4
     await Timer(1, "ns")
-    assert 2 == dut.o_quotient.value
-    assert 2 == dut.o_remainder.value
+    assert 16 == dut.o_quotient.value # originally 2
+    assert 7 == dut.o_remainder.value # originally 2
 
 @cocotb.test()
 async def test_simple3(dut):
